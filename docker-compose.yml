@@ -1,0 +1,11 @@
+version: '3.8'
+
+services:
+  bot:
+    build: .
+    container_name: telegram_svg_bot
+    restart: unless-stopped
+    volumes:
+      - ./templates:/app/templates
+    env_file:
+      - .env
