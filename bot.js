@@ -1,7 +1,7 @@
 const { Telegraf, session } = require('telegraf');
 const fs = require('fs').promises;
 const path = require('path');
-const sharp = require('sharp');
+const { Resvg } = require('@resvg/resvg-js');
 const cheerio = require('cheerio');
 const axios = require('axios');
 require('dotenv').config();
@@ -70,7 +70,9 @@ const generateImageBuffer = async (ctx) => {
         }
     }
     
-    return await sharp(Buffer.from(modifiedSvg)).png().toBuffer();
+    const resvg = new Resvg(modifiedSvg);
+    const pngData = resvg.render();
+    return pngData.asPng();
 };
 
 bot.command('start', async (ctx) => {
